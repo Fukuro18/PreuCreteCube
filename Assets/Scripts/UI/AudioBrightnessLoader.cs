@@ -1,56 +1,77 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioBrightnessLoader : MonoBehaviour
 {
+    [Header("Música (Resources)")]
+    [SerializeField] private string musicResourcePath = "Audio/musica"; 
+    [SerializeField] private string musicObjectName = "BackgroundMusic";
+
+    [Header("Escenas donde DEBE sonar música")]
+    [SerializeField] private string[] musicScenes = { "MainMenu", "Settings", "Cube" };
+
     void Start()
     {
-        // Cargar valores guardados (si no existen, usa 1f por defecto)
+        // 1) Cargar valores guardados (si no existen, usa 1f por defecto)
         float volume = PlayerPrefs.GetFloat("volume", 1f);
         float brightness = PlayerPrefs.GetFloat("brightness", 1f);
 
-        // Aplicar volumen global
+        // 2) Aplicar volumen global
         AudioListener.volume = volume;
 
-#if UNITY_EDITOR
-        // Implementación de música desde Assets/Audio (Solo Editor)
-        // Solo reproducir si estamos en el MainMenu
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "MainMenu")
-        {
-            GameObject musicObj = GameObject.Find("BackgroundMusic");
-            if (musicObj == null)
-            {
-                musicObj = new GameObject("BackgroundMusic");
-                AudioSource audioSource = musicObj.AddComponent<AudioSource>();
-                
-                // Cargar archivo específico sin moverlo
-                AudioClip clip = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Audio/musica.wav");
-                
-                if (clip != null)
-                {
-                    audioSource.clip = clip;
-                    audioSource.loop = true;
-                    audioSource.volume = volume; 
-                    audioSource.Play();
-                    
-                    // Agregar el script que controla la persistencia inteligente
-                    // Este script se encargará de "DontDestroyOnLoad" y de destruir el objeto si sale de las escenas permitidas
-                    musicObj.AddComponent<MusicPersistence>();
-                }
-                else
-                {
-                    Debug.LogWarning("No se encontró 'Assets/Audio/musica.wav'.");
-                }
-            }
-        }
-#endif
+        // 3) Música de fondo (si la escena lo permite)
+        TryEnsureBackgroundMusic(volume);
 
-        // Aplicar brillo global (luz ambiental)
+        // 4) Aplicar brillo global (luz ambiental)
         UpdateBrightness(brightness);
+    }
+
+    private void TryEnsureBackgroundMusic(float volume)
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        // Si esta escena NO está en la lista, no crear música
+        if (!IsMusicScene(sceneName)) return;
+
+        // Si ya existe, no duplicar
+        GameObject musicObj = GameObject.Find(musicObjectName);
+        if (musicObj != null) return;
+
+        // Crear objeto
+        musicObj = new GameObject(musicObjectName);
+        AudioSource audioSource = musicObj.AddComponent<AudioSource>();
+
+        // Cargar clip desde Resources
+        AudioClip clip = Resources.Load<AudioClip>(musicResourcePath);
+        if (clip == null)
+        {
+            Debug.LogWarning($"No se encontró el AudioClip en Resources: '{musicResourcePath}'. " +
+                             $"Asegúrate de tenerlo en Assets/Resources/{musicResourcePath}.wav");
+            Destroy(musicObj);
+            return;
+        }
+
+        audioSource.clip = clip;
+        audioSource.loop = true;
+        audioSource.playOnAwake = false;
+        audioSource.volume = 1f; // IMPORTANTE: el volumen lo controla AudioListener.volume
+        audioSource.Play();
+
+        // Persistencia controlada por escenas
+        musicObj.AddComponent<MusicPersistence>();
+    }
+
+    private bool IsMusicScene(string sceneName)
+    {
+        for (int i = 0; i < musicScenes.Length; i++)
+        {
+            if (musicScenes[i] == sceneName) return true;
+        }
+        return false;
     }
 
     public void UpdateBrightness(float brightness)
     {
-        // Delegar toda la lógica al Manager centralizado para evitar colisiones
         BrightnessManager.SetBrightness(brightness);
     }
 }

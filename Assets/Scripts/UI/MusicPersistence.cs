@@ -12,12 +12,9 @@ public class MusicPersistence : MonoBehaviour
     {
         string sceneName = SceneManager.GetActiveScene().name;
 
-        // Lista Blanca: Escenas donde la música PUEDE existir
-        // 1. MainMenu: Donde empieza
-        // 2. Cube: El juego (al dar Play)
-        if (sceneName != "MainMenu" && sceneName != "Cube")
+        // Música permitida en estas escenas:
+        if (sceneName != "MainMenu" && sceneName != "Settings" && sceneName != "Cube")
         {
-            // Si estamos en cualquier otra escena (ej. Video, Settings), destruir la música
             Destroy(gameObject);
         }
     }
