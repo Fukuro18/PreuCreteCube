@@ -3,17 +3,22 @@ using UnityEngine.SceneManagement;
 
 public class MusicPersistence : MonoBehaviour
 {
+    [SerializeField] private string noAudioSceneName = "Video";
+
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    void Update()
+    void OnDestroy()
     {
-        string sceneName = SceneManager.GetActiveScene().name;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
-        // Música permitida en estas escenas:
-        if (sceneName != "MainMenu" && sceneName != "Settings" && sceneName != "Cube")
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == noAudioSceneName)
         {
             Destroy(gameObject);
         }
