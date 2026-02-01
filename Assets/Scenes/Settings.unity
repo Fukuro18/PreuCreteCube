@@ -7274,7 +7274,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1731629086}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3123228626017199009, guid: f0859577120b0ab4ca075e25fb2e6ab1,
         type: 3}
@@ -7284,17 +7284,17 @@ PrefabInstance:
     - target: {fileID: 3123228626017199009, guid: f0859577120b0ab4ca075e25fb2e6ab1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.103
+      value: 0.030000001
       objectReference: {fileID: 0}
     - target: {fileID: 3123228626017199009, guid: f0859577120b0ab4ca075e25fb2e6ab1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.121
+      value: 14.121
       objectReference: {fileID: 0}
     - target: {fileID: 3123228626017199009, guid: f0859577120b0ab4ca075e25fb2e6ab1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.509
+      value: -186.386
       objectReference: {fileID: 0}
     - target: {fileID: 3123228626017199009, guid: f0859577120b0ab4ca075e25fb2e6ab1,
         type: 3}
@@ -7331,10 +7331,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3123228626017199010, guid: f0859577120b0ab4ca075e25fb2e6ab1,
+        type: 3}
+      propertyPath: _startPosition
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3123228626017199010, guid: f0859577120b0ab4ca075e25fb2e6ab1,
+        type: 3}
+      propertyPath: _sliderTravelDistance
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3123228626017199020, guid: f0859577120b0ab4ca075e25fb2e6ab1,
         type: 3}
       propertyPath: m_Name
-      value: Physical Hands Slider
+      value: Physical Hands Slider(Sonido)
       objectReference: {fileID: 0}
     - target: {fileID: 4922744702958729867, guid: f0859577120b0ab4ca075e25fb2e6ab1,
         type: 3}
@@ -7438,12 +7448,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1273947154}
   m_SourcePrefab: {fileID: 100100000, guid: f0859577120b0ab4ca075e25fb2e6ab1, type: 3}
---- !u!4 &1273947148 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3123228626017199009, guid: f0859577120b0ab4ca075e25fb2e6ab1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1273947147}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1273947149 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3123228626017199020, guid: f0859577120b0ab4ca075e25fb2e6ab1,
@@ -7716,10 +7720,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3123228626017199010, guid: f0859577120b0ab4ca075e25fb2e6ab1,
+        type: 3}
+      propertyPath: _startPosition
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3123228626017199010, guid: f0859577120b0ab4ca075e25fb2e6ab1,
+        type: 3}
+      propertyPath: _sliderTravelDistance
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3123228626017199020, guid: f0859577120b0ab4ca075e25fb2e6ab1,
         type: 3}
       propertyPath: m_Name
-      value: Physical Hands Slider
+      value: Physical Hands Slider(brillo)
       objectReference: {fileID: 0}
     - target: {fileID: 4922744702958729867, guid: f0859577120b0ab4ca075e25fb2e6ab1,
         type: 3}
@@ -7961,8 +7975,7 @@ Transform:
   m_LocalPosition: {x: -0.073, y: 14, z: -186.895}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1273947148}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1731629087
@@ -8475,3 +8488,4 @@ SceneRoots:
   - {fileID: 555416942}
   - {fileID: 1114978419}
   - {fileID: 1516524550}
+  - {fileID: 1273947147}
